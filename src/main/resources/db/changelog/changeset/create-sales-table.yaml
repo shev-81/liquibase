@@ -1,0 +1,62 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-sales
+      author: userName
+      changes:
+        - createTable:
+            tableName: sales
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: client_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: date_sale
+                  type: timestamp without time zone
+                  defaultValue: now()
+                  constraints:
+                    nullable: false
+              - column:
+                  name: receipt_number
+                  autoIncrement: true
+                  type: bigint
+                  defaultValue: 100
+                  constraints:
+                    nullable: false
+        - insert:
+            tableName: sales
+            columns:
+              - column:
+                  name: id
+                  value: 1
+              - column:
+                  name: client_id
+                  value: 1
+              - column:
+                  name: receipt_number
+                  value: 101
+        - insert:
+            tableName: sales
+            columns:
+              - column:
+                  name: id
+                  value: 2
+              - column:
+                  name: client_id
+                  value: 2
+              - column:
+                  name: receipt_number
+                  value: 102
+      rollback:
+        - delete:
+            tableName: sales
+            where: id in (1, 2)
+

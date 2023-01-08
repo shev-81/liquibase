@@ -1,0 +1,123 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-positions
+      author: userName
+      changes:
+        - createTable:
+            tableName: positions
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: product_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: quantity
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: original_price
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: final_price
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: final_discount
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: sales_id
+                  type: bigint
+                  constraints:
+                    foreignKeyName: sales_position_fk
+                    referencedTableName: sales
+                    referencedColumnNames: id
+        - insert:
+            tableName: positions
+            columns:
+              - column:
+                  name: id
+                  value: 1
+              - column:
+                  name: product_id
+                  value: 1
+              - column:
+                  name: quantity
+                  value: 2
+              - column:
+                  name: original_price
+                  value: 10
+              - column:
+                  name: final_price
+                  value: 9
+              - column:
+                  name: final_discount
+                  value: 10
+              - column:
+                  name: sales_id
+                  value: 1
+        - insert:
+            tableName: positions
+            columns:
+              - column:
+                  name: id
+                  value: 2
+              - column:
+                  name: product_id
+                  value: 2
+              - column:
+                  name: quantity
+                  value: 10
+              - column:
+                  name: original_price
+                  value: 50
+              - column:
+                  name: final_price
+                  value: 45
+              - column:
+                  name: final_discount
+                  value: 10
+              - column:
+                  name: sales_id
+                  value: 1
+        - insert:
+            tableName: positions
+            columns:
+              - column:
+                  name: id
+                  value: 3
+              - column:
+                  name: product_id
+                  value: 1
+              - column:
+                  name: quantity
+                  value: 10
+              - column:
+                  name: original_price
+                  value: 50
+              - column:
+                  name: final_price
+                  value: 45
+              - column:
+                  name: final_discount
+                  value: 10
+              - column:
+                  name: sales_id
+                  value: 2
+      rollback:
+        - delete:
+            tableName: positions
+            where: id in (1, 2, 3)

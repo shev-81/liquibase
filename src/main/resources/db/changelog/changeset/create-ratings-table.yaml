@@ -1,0 +1,67 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-ratings
+      author: userName
+      changes:
+        - createTable:
+            tableName: ratings
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: client_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: evaluation
+                  type: bigint
+                  defaultValue: 0
+                  constraints:
+                    nullable: true
+              - column:
+                  name: product_id
+                  type: bigint
+                  constraints:
+                    foreignKeyName: rating_fk
+                    referencedTableName: products
+                    referencedColumnNames: id
+        - insert:
+            tableName: ratings
+            columns:
+              - column:
+                  name: id
+                  value: 1
+              - column:
+                  name: client_id
+                  value: 1
+              - column:
+                  name: evaluation
+                  value: 3
+              - column:
+                  name: product_id
+                  value: 1
+        - insert:
+            tableName: ratings
+            columns:
+              - column:
+                  name: id
+                  value: 2
+              - column:
+                  name: client_id
+                  value: 2
+              - column:
+                  name: evaluation
+                  value: 5
+              - column:
+                  name: product_id
+                  value: 1
+      rollback:
+        - delete:
+            tableName: ratings
+            where: id in (1, 2)
